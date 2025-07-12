@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity Verification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: blink 1s infinite alternate;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .yes {
+            background-color: #28a745;
+            color: white;
+        }
+        .yes:hover {
+            background-color: #218838;
+        }
+        .no {
+            background-color: #dc3545;
+            color: white;
+        }
+        .no:hover {
+            background-color: #c82333;
+        }
+        .hidden {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">Are you Saumya?</h1>
+    
+    <div class="buttons">
+        <button class="yes" onclick="showCaptcha()">Yes</button>
+        <button class="no" onclick="alert('Access Denied!')">No</button>
+    </div>
+
+    <div class="hidden" id="captchaBox">
+        <p>Your Generated Password: <strong id="generatedPassword"></strong></p>
+        <p>Enter CAPTCHA: <strong id="captchaText"></strong></p>
+        <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+        <button class="submit" onclick="verifyCaptcha()">Submit</button>
+    </div>
+
+    <script>
+        function generateRandomString(length) {
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            let result = "";
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function showCaptcha() {
+            document.getElementById("captchaBox").style.display = "block";
+            let password = generateRandomString(8);
+            let captcha = generateRandomString(6);
+            document.getElementById("generatedPassword").innerText = password;
+            document.getElementById("captchaText").innerText = captcha;
+        }
+
+        function verifyCaptcha() {
+            let userCaptcha = document.getElementById("captchaInput").value.trim();
+            let correctCaptcha = document.getElementById("captchaText").innerText;
+
+            if (userCaptcha === correctCaptcha) {
+                alert("✅ Verification Successful!");
+                window.location.href = "final1.html"; // Change this to your next page
+            } else {
+                alert("❌ Incorrect CAPTCHA. Try Again!");
+            }
+        }
+    </script>
+
+</body>
+</html>
